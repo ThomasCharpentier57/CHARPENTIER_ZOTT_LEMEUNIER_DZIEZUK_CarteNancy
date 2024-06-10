@@ -19,7 +19,6 @@ async function loadStations() {
     const stations = infoData.data.stations;
     const statuses = statusData.data.stations;
 
-    // Create a mapping of station_id to status
     const statusMap = new Map();
     statuses.forEach(status => {
         statusMap.set(status.station_id, status);
