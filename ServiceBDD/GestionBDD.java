@@ -15,6 +15,7 @@ public class GestionBDD implements ServiceBDD {
     public GestionBDD(String user, String password){
         try{
         connection = DriverManager.getConnection("jdbc:oracle:thin:@charlemagne.iutnc.univ-lorraine.fr:1521:infodb", user, password);
+        connection.setAutoCommit(false);
         }catch(SQLException e ){
             System.out.println("Erreur de connexion");
         }
@@ -52,6 +53,7 @@ public class GestionBDD implements ServiceBDD {
             sPreparedStatement.setInt(2, nbPersonnes);
             sPreparedStatement.setString(3, nTelephone);
             sPreparedStatement.executeQuery();  
+            connection.commit();
         } catch(SQLException e ){
             System.out.println(e.getSQLState());
         }
