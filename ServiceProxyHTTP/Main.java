@@ -13,8 +13,8 @@ import java.time.Duration;
 
 public class Main {
     public static void main(String[] args) {
-        String proxyHost = "proxy.example.com"; // Faut pas oublier de changer le proxy
-        int proxyPort = 80;
+        String proxyHost = "www-cache.iutnc.univ-lorraine.fr"; // Faut pas oublier de changer le proxy
+        int proxyPort = 3128;
 
         HttpClient client = HttpClient.newBuilder()
                 .version(HttpClient.Version.HTTP_1_1)
