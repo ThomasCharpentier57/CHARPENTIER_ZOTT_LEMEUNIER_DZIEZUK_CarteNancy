@@ -1,3 +1,5 @@
+package proxy;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
@@ -9,10 +11,11 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.rmi.RemoteException;
 import java.time.Duration;
 
-public class Main {
-    public static void main(String[] args) {
+public class ServiceTravaux implements ServiceTravauxInterface {
+    public String lancer(String url) throws RemoteException {
         String proxyHost = "www-cache.iutnc.univ-lorraine.fr"; // Faut pas oublier de changer le proxy
         int proxyPort = 3128;
 
@@ -31,23 +34,10 @@ public class Main {
                 .build();
 
         try {
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            if (response.statusCode() == 200) {
-                String responseBody = response.body();
-                JSONObject jsonObject = new JSONObject(new JSONTokener(responseBody));
-                JSONArray incidents = jsonObject.getJSONArray("incidents");
-
-                for (int i = 0; i < incidents.length(); i++) {
-                    JSONObject incident = incidents.getJSONObject(i);
-                    System.out.println("Incident ID: " + incident.getString("id"));
-                    System.out.println("Description: " + incident.getString("description"));
-                }
-            } else {
-                System.out.println("Failed to fetch data. HTTP status code: " + response.statusCode());
-            }
+            client.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
+        return proxyHost;
     }
 }
