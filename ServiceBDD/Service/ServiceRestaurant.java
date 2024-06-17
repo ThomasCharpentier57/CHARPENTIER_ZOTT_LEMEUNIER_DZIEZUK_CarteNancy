@@ -25,9 +25,9 @@ public class ServiceRestaurant implements ServiceRestaurantInterface {
             connection.setAutoCommit(false);
         } catch (SQLException e) {
             System.out.println("Erreur de connexion" + e.getMessage());
-        } catch (ClassNotFoundException e){
+        } catch (ClassNotFoundException e) {
             System.out.println("Class Not Found" + e);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Erreur" + e);
         }
     }
@@ -39,25 +39,25 @@ public class ServiceRestaurant implements ServiceRestaurantInterface {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM restaurant");
             sb.append("\t\"restaurants\": [\n");
-            while(rs.next()){
+            while (rs.next()) {
                 sb.append("\t{\n");
-                sb.append("\t\t\"name\": "+rs.getString(1)+",\n");
-                sb.append("\t\t\"adress\": "+rs.getString(2)+",\n");
-                sb.append("\t\t\"longitude\": "+rs.getString(3)+",\n");
-                sb.append("\t\t\"latitude\": "+rs.getString(4)+",\n");
+                sb.append("\t\t\"name\": " + rs.getString(1) + ",\n");
+                sb.append("\t\t\"adress\": " + rs.getString(2) + ",\n");
+                sb.append("\t\t\"longitude\": " + rs.getString(3) + ",\n");
+                sb.append("\t\t\"latitude\": " + rs.getString(4) + ",\n");
                 sb.append("\t},\n");
             }
             sb.append("\t]\n");
             rs.close();
             statement.close();
-    
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
         sb.append("}");
         return sb.toString();
 
-    
+
     }
 
     @Override
@@ -78,7 +78,7 @@ public class ServiceRestaurant implements ServiceRestaurantInterface {
             transaction.executeUpdate();
 
             PreparedStatement reserver_table = this.connection.prepareStatement(
-                    "INSERT INTO reservation (idReservation, idRestaurant, numtab, nom, prenom, nbpers, numTelephone, dateReservation) VALUES (?, ?, ?, ?, ?,?, ?, to_date(?,'dd/mm/yyyy'))"
+                    "INSERT INTO reservation (idReservation, idRestaurant, numtab, nom, prenom, nbpers, numTelephone, dateReservation) VALUES (?, ?, ?, ?, ?,?, ?, to_date(?,'YYYY-MM-DD'))"
             );
 
             PreparedStatement idMax = this.connection.prepareStatement(
@@ -86,7 +86,7 @@ public class ServiceRestaurant implements ServiceRestaurantInterface {
             );
 
             LocalDateTime now = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String formattedNow = now.format(formatter);
 
             ResultSet resultat_idMax = idMax.executeQuery();
@@ -102,8 +102,23 @@ public class ServiceRestaurant implements ServiceRestaurantInterface {
             reserver_table.setString(7, nTelephone);
             reserver_table.setString(8, formattedNow);
 
+            reserver_table.executeUpdate();
+
             this.connection.commit();
+
+            PreparedStatement t = this.connection.prepareStatement(
+                    "SELECT * FROM RESERVATION"
+            );
+
+            ResultSet taa = t.executeQuery();
+
+            while (taa.next()){
+                System.out.println(taa.getNString(1) + taa.getString(2) + "\n");
+            }
+
             this.connection.close();
+
+            System.out.println("RESERVER");
 
         } catch (SQLException e) {
             System.out.println();
@@ -126,38 +141,44 @@ public class ServiceRestaurant implements ServiceRestaurantInterface {
 
         while (resultat_tabl_dispo.next()) {
             list_table.add(resultat_tabl_dispo.getInt(1));
-            System.out.println(resultat_tabl_dispo.getInt(1));
+            System.out.println("Table dispo : " + resultat_tabl_dispo.getInt(1));
+            System.out.println(list_table);
         }
 
-        if (resultat_tabl_dispo.next() != false) {
+        PreparedStatement verif_restau = this.connection.prepareStatement(
+                "SELECT numtab FROM reservation WHERE numtab = ? AND dateReservation != to_date(?,'YYYY-MM-DD')"
+        );
 
-            PreparedStatement verif_restau = this.connection.prepareStatement(
-                    "SELECT numtab FROM reservation WHERE numtab = ? AND dateReservation = to_date(?,'dd/mm/yyyy')"
-            );
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedNow = now.format(formatter);
 
-            LocalDateTime now = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            String formattedNow = now.format(formatter);
+        System.out.println(formattedNow);
 
-            ResultSet resultat;
+        int table_dispo = -1;
 
-            int table_dispo = -1;
-
-            for (int j : list_table) {
+        for (int j : list_table) {
+            try {
+                System.out.println("Vérification pour table : " + j);
 
                 verif_restau.setInt(1, j);
                 verif_restau.setString(2, formattedNow);
 
-                resultat = verif_restau.executeQuery();
+                ResultSet res = verif_restau.executeQuery();
 
-                resultat.next();
-                table_dispo = resultat.getInt(1);
+                // Vérifier si la table est disponible à la date spécifiée
+                if (res.next()) {
+                    table_dispo = j; // Table disponible trouvée
+                    System.out.println("Table sélectionnée : " + table_dispo);
+                    break; // Sortir de la boucle dès qu'une table est trouvée
+                }
+
+                res.close();
+            } catch (SQLException q) {
+                System.out.println("Erreur de vérification de la table : " + q.getMessage());
             }
-
-            return table_dispo;
-
-        } else {
-            return -1;
         }
+
+        return table_dispo;
     }
 }
