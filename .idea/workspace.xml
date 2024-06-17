@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="99f482e0-5b25-4ea9-85d8-742d81a57494" name="Changes" comment="api velib quasi finie">
-      <change beforePath="$PROJECT_DIR$/CarteNancy_web/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/CarteNancy_web/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarteNancy_web/dist/js/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/CarteNancy_web/dist/js/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CarteNancy_web/dist/js/restaurant.js" beforeDir="false" afterPath="$PROJECT_DIR$/CarteNancy_web/dist/js/restaurant.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,6 +47,7 @@
     &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/blazy/CHARPENTIER_ZOTT_LEMEUNIER_DZIEZUK_CarteNancy/ServeurProxyHTTP&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -58,6 +61,14 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\blazy\CHARPENTIER_ZOTT_LEMEUNIER_DZIEZUK_CarteNancy\ServeurProxyHTTP" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\blazy\CHARPENTIER_ZOTT_LEMEUNIER_DZIEZUK_CarteNancy\ServeurProxyHTTP" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="CHARPENTIER_ZOTT_LEMEUNIER_DZIEZUK_CarteNancy" />

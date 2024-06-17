@@ -1,3 +1,5 @@
+import {getAllRestaurant} from "./restaurant.js";
+
 const map = L.map('map').setView([48.692054, 6.184417], 13);
 
 const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -47,3 +49,6 @@ function addStationsToMap(stations) {
 loadStations().then(stations => {
     addStationsToMap(stations);
 });
+
+
+getAllRestaurant();

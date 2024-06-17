@@ -5,7 +5,7 @@ import java.rmi.server.UnicastRemoteObject;
 
 public class LancerServiceRestaurant {
     public static void main(String[] args) {
-        ServiceRestaurant bdd = new ServiceRestaurant("zott1u", "Ju62lt82&*");
+        ServiceRestaurant bdd = new ServiceRestaurant("", "");
         try {
             UnicastRemoteObject.exportObject(bdd, 0);
         } catch (RemoteException e) {
