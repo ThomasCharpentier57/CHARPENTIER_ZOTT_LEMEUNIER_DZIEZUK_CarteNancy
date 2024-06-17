@@ -15,7 +15,7 @@ import Service.ServiceRestaurantInterface;
 public class ClientRestaurant {
 
     final static String service = "ServiceRestaurant";
-    static int port = 6789;
+    static int port = 0;
     static String host = "localhost";
 
     public static void main(String[] args) throws RemoteException, NotBoundException {
@@ -26,28 +26,27 @@ public class ClientRestaurant {
         } else if (args.length == 1) {
             host = args[0];
         } else if (args.length == 0) {
-            System.out.println("Using default values: host = localhost, port = 10002");
+            System.out.println("Utilisation de : host = localhost, port = 0");
         } else {
-            System.out.println("Usage: java -jar ClientRestaurant.jar [host] [port]");
+            System.out.println("Nombre de paramètres incorrects (0, 1 ou 2)");
             System.exit(1);
         }
 
         ServiceRestaurantInterface serviceRestaurant = (ServiceRestaurantInterface) LocateRegistry.getRegistry(host, port).lookup(service);
 
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Bienvenue dans le client restaurant");
-        System.out.println("Example pour faire une reservation : ");
-        System.out.println("0. Quitter");
+        System.out.println("Bienvenue");
+        System.out.println("0 : Quitter");
 
         int choice;
         while (true) {
 
-            System.out.println("Quelle fonction voulez-vous utiliser ?");
+            System.out.println("Quelle fonction voulez-vous utiliser (1-> Coordonnées d'un restaurant, 2-> Réserver table) : ");
             choice = scanner.nextInt();
 
             switch (choice) {
                 case 0:
-                                    System.out.println("Fin du client restaurant");
+                    System.out.println("Fin du client restaurant");
                 scanner.close();
                 System.exit(0);
                     break;
@@ -57,37 +56,31 @@ public class ClientRestaurant {
                 case 2:
                     System.out.println("Veuillez entrer l'id du restaurant");
                     Scanner scanner_idRestau = new Scanner(System.in);
+                    int idRestau = scanner_idRestau.nextInt();
 
                     System.out.println("Veuillez entrer le nom");
-                    System.out.println("Veuillez entrer le prénom");
-                    System.out.println("Veuillez entrer le nombre de personnes");
-                    System.out.println("Veuillez entrer le numéro de téléphone");
+                    Scanner scanner_nom = new Scanner(System.in);
+                    String nom = scanner_nom.nextLine();
 
-                    reserverTable(serviceRestaurant, scanner);
+                    System.out.println("Veuillez entrer le prénom");
+                    Scanner scanner_prenom = new Scanner(System.in);
+                    String prenom = scanner_prenom.nextLine();
+
+                    System.out.println("Veuillez entrer le nombre de personnes");
+                    Scanner scanner_nbPersonne = new Scanner(System.in);
+                    int nbPersonnes = scanner_nbPersonne.nextInt();
+
+                    System.out.println("Veuillez entrer le numéro de téléphone");
+                    Scanner scanner_numTel = new Scanner(System.in);
+                    int numTel = scanner_numTel.nextInt();    
+
+                    reserverTable(idRestau,nom,prenom,nbPersonnes,numTel);
                     break;           
                 default:
                 break;
             }    
 
-            // Demande des paramètres
-            Object[] params = new Object[method.getParameterCount()];
-            for (int j = 0; j < method.getParameterCount(); j++) {
-                Parameter parameter = method.getParameters()[j];
-                System.out.println("Veuillez entrer le paramètre " + (j + 1) + " " + parameter.getName() + " de type " + parameter.getType().getSimpleName());
-                if (method.getParameterTypes()[j] == int.class) {
-                    params[j] = scanner.nextInt();
-                } else if (method.getParameterTypes()[j] == String.class) {
-                    params[j] = scanner.next();
-                }
-            }
-
-            // Appel de la méthode
-            try {
-                Object result = method.invoke(serviceRestaurant, params);
-                System.out.println("Résultat: " + result);
-            } catch (Exception e) {
-                System.out.println("Erreur: " + e.getMessage());
-            }
+            
         }
 
 

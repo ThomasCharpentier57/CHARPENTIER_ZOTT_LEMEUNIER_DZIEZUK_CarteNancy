@@ -48,7 +48,10 @@ public class ServiceRestaurant implements ServiceRestaurantInterface {
             e.printStackTrace();
         }
         sb.append("]");
-        return sb.toString();
+        Gson gson = new Gson();
+        String json = gson.toJson(sb.toString());
+        return json;
+    
     } 
 
     @Override
