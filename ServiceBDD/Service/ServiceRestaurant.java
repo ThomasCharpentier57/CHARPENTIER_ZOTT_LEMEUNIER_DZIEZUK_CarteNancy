@@ -1,5 +1,3 @@
-package Service;
-
 import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.sql.*;
 
 /**
  * GestionBDD
@@ -18,10 +17,16 @@ public class ServiceRestaurant implements ServiceRestaurantInterface {
 
     public ServiceRestaurant(String user, String password) {
         try {
-            connection = DriverManager.getConnection("jdbc:oracle:thin:@charlemagne.iutnc.univ-lorraine.fr:1521:infodb", user, password);
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            System.out.println("Driver loaded");
+            connection = DriverManager.getConnection("jdbc:oracle:thin:@charlemagne.iutnc.univ-lorraine.fr:1521:INFODB", user, password);
             connection.setAutoCommit(false);
         } catch (SQLException e) {
-            System.out.println("Erreur de connexion");
+            System.out.println("Erreur de connexion" + e.getMessage());
+        } catch (ClassNotFoundException e){
+            System.out.println("Class Not Found" + e);
+        } catch (Exception e){
+            System.out.println("Erreur" + e);
         }
     }
 

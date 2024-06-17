@@ -1,9 +1,5 @@
 <project version="4">
-<<<<<<< HEAD
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="temurin-17" project-jdk-type="JavaSDK">
-=======
   <component name="ProjectRootManager" version="2" default="true">
->>>>>>> be58db2699ee6733bf3840420e3d15fc63beceb4
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

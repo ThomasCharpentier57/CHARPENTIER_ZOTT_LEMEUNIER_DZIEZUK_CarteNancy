@@ -1,16 +1,13 @@
-package Client;
-
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.Scanner;
-
-import Service.ServiceRestaurantInterface;
 
 public class ClientRestaurant {
 
     final static String service = "ServiceRestaurant";
-    static int port = 0;
+    static int port = 1099;
     static String host = "localhost";
 
     public static void main(String[] args) throws RemoteException, NotBoundException {

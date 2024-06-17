@@ -1,11 +1,10 @@
-package Service;
-
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.rmi.RemoteException;
 
 public class LancerServiceRestaurant {
     public static void main(String[] args) {
-        ServiceRestaurant bdd = new ServiceRestaurant("", "");
+        ServiceRestaurant bdd = new ServiceRestaurant("zott1u", "Ju62lt82&*");
         try {
             UnicastRemoteObject.exportObject(bdd, 0);
         } catch (RemoteException e) {
