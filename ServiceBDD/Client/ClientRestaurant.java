@@ -1,14 +1,9 @@
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
+package Client;
+
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
-
-import javax.swing.text.Style;
 
 import Service.ServiceRestaurantInterface;
 
@@ -47,8 +42,8 @@ public class ClientRestaurant {
             switch (choice) {
                 case 0:
                     System.out.println("Fin du client restaurant");
-                scanner.close();
-                System.exit(0);
+                    scanner.close();
+                    System.exit(0);
                     break;
                 case 1:
                     System.out.println(serviceRestaurant.getCoordRestaurant());
@@ -72,17 +67,13 @@ public class ClientRestaurant {
 
                     System.out.println("Veuillez entrer le numéro de téléphone");
                     Scanner scanner_numTel = new Scanner(System.in);
-                    int numTel = scanner_numTel.nextInt();    
+                    int numTel = scanner_numTel.nextInt();
 
-                    reserverTable(idRestau,nom,prenom,nbPersonnes,numTel);
-                    break;           
+                    serviceRestaurant.reserverTable(idRestau, nom, prenom, nbPersonnes, numTel);
+                    break;
                 default:
-                break;
-            }    
-
-            
+                    break;
+            }
         }
-
-
     }
 }

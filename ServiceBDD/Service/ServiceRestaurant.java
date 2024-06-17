@@ -1,4 +1,5 @@
 package Service;
+
 import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,10 +7,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -19,11 +16,11 @@ import java.time.format.DateTimeFormatter;
 public class ServiceRestaurant implements ServiceRestaurantInterface {
     private Connection connection;
 
-    public ServiceRestaurant(String user, String password){
-        try{
-        connection = DriverManager.getConnection("jdbc:oracle:thin:@charlemagne.iutnc.univ-lorraine.fr:1521:infodb", user, password);
-        connection.setAutoCommit(false);
-        }catch(SQLException e ){
+    public ServiceRestaurant(String user, String password) {
+        try {
+            connection = DriverManager.getConnection("jdbc:oracle:thin:@charlemagne.iutnc.univ-lorraine.fr:1521:infodb", user, password);
+            connection.setAutoCommit(false);
+        } catch (SQLException e) {
             System.out.println("Erreur de connexion");
         }
     }
@@ -34,16 +31,16 @@ public class ServiceRestaurant implements ServiceRestaurantInterface {
         try {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM Restaurant;");
-            while(rs.next()){
+            while (rs.next()) {
                 sb.append("\t{\n");
-                sb.append("\t\t\"name\": "+rs.getString(0)+",\n");
-                sb.append("\t\t\"adress\": "+rs.getString(1)+",\n");
-                sb.append("\t\t\"name\": "+rs.getString(3)+",\n");
+                sb.append("\t\t\"name\": " + rs.getString(0) + ",\n");
+                sb.append("\t\t\"adress\": " + rs.getString(1) + ",\n");
+                sb.append("\t\t\"name\": " + rs.getString(3) + ",\n");
                 sb.append("\t},\n");
             }
             rs.close();
             statement.close();
-    
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -51,16 +48,15 @@ public class ServiceRestaurant implements ServiceRestaurantInterface {
         Gson gson = new Gson();
         String json = gson.toJson(sb.toString());
         return json;
-    
-    } 
+    }
 
     @Override
-    public void reserverTable(int idRestau, String nom, String prenom, int nbPersonnes, String nTelephone) throws RemoteException {
+    public void reserverTable(int idRestau, String nom, String prenom, int nbPersonnes, int nTelephone) throws RemoteException {
         try {
 
             int table_disponible = verif_table(idRestau, nbPersonnes);
 
-            if(table_disponible == -1){
+            if (table_disponible == -1) {
                 System.out.println("Pas de table disponible");
                 return;
             }
@@ -72,13 +68,13 @@ public class ServiceRestaurant implements ServiceRestaurantInterface {
             transaction.executeUpdate();
 
             PreparedStatement reserver_table = this.connection.prepareStatement(
-                "INSERT INTO reservation (idReservation, idRestaurant, numtab, nom, prenom, nbpers, numTelephone, dateReservation) VALUES (?, ?, ?, ?, ?, ?, to_date(?,'dd/mm/yyyy'))"
+                    "INSERT INTO reservation (idReservation, idRestaurant, numtab, nom, prenom, nbpers, numTelephone, dateReservation) VALUES (?, ?, ?, ?, ?,?, ?, to_date(?,'dd/mm/yyyy'))"
             );
 
             PreparedStatement idMax = this.connection.prepareStatement(
-                "SELECT MAX(idReservation) FROM reservation"
+                    "SELECT MAX(idReservation) FROM reservation"
             );
-            
+
             LocalDateTime now = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             String formattedNow = now.format(formatter);
@@ -93,7 +89,7 @@ public class ServiceRestaurant implements ServiceRestaurantInterface {
             reserver_table.setString(4, nom);
             reserver_table.setString(5, prenom);
             reserver_table.setInt(6, nbPersonnes);
-            reserver_table.setString(7, nTelephone);
+            reserver_table.setInt(7, nTelephone);
             reserver_table.setString(8, formattedNow);
 
             this.connection.commit();
@@ -104,13 +100,13 @@ public class ServiceRestaurant implements ServiceRestaurantInterface {
             System.out.println("Erreur lors de la réservation : " + e.getMessage());
         }
     }
-    
+
     private int verif_table(int idRestau, int nbPlace) throws SQLException {
 
         int[] list_table = {};
 
         PreparedStatement verif_table = this.connection.prepareStatement(
-            "SELECT numtab FROM tabl WHERE idRestaurant = ? AND nbplace >= ?"
+                "SELECT numtab FROM tabl WHERE idRestaurant = ? AND nbplace >= ?"
         );
 
         verif_table.setInt(idRestau, 1);
@@ -129,7 +125,7 @@ public class ServiceRestaurant implements ServiceRestaurantInterface {
             }
 
             PreparedStatement verif_restau = this.connection.prepareStatement(
-            "SELECT numtab FROM reservation WHERE numtab = ? AND dateReservation = to_date(?,'dd/mm/yyyy')"
+                    "SELECT numtab FROM reservation WHERE numtab = ? AND dateReservation = to_date(?,'dd/mm/yyyy')"
             );
 
             LocalDateTime now = LocalDateTime.now();
@@ -157,7 +153,4 @@ public class ServiceRestaurant implements ServiceRestaurantInterface {
             return -1;
         }
     }
-
-    
-    
 }
