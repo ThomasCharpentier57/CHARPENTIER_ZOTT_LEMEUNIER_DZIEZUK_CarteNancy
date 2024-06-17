@@ -30,27 +30,29 @@ public class ServiceRestaurant implements ServiceRestaurantInterface {
 
     @Override
     public String getCoordRestaurant() throws RemoteException {
-        StringBuilder sb = new StringBuilder("[\n");
+        StringBuilder sb = new StringBuilder("{\n");
         try {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM Restaurant;");
+            sb.append("\t\"restaurants\": [\n");
             while(rs.next()){
                 sb.append("\t{\n");
-                sb.append("\t\t\"name\": "+rs.getString(0)+",\n");
-                sb.append("\t\t\"adress\": "+rs.getString(1)+",\n");
-                sb.append("\t\t\"name\": "+rs.getString(3)+",\n");
+                sb.append("\t\t\"name\": "+rs.getString(1)+",\n");
+                sb.append("\t\t\"adress\": "+rs.getString(2)+",\n");
+                sb.append("\t\t\"longitude\": "+rs.getString(3)+",\n");
+                sb.append("\t\t\"latitude\": "+rs.getString(4)+",\n");
                 sb.append("\t},\n");
             }
+            sb.append("\t]\n");
             rs.close();
             statement.close();
     
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        sb.append("]");
-        Gson gson = new Gson();
-        String json = gson.toJson(sb.toString());
-        return json;
+        sb.append("}");
+        return sb.toString();
+
     
     } 
 
