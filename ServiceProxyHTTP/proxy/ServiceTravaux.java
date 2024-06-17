@@ -11,7 +11,7 @@ import java.rmi.RemoteException;
 import java.time.Duration;
 
 public class ServiceTravaux implements ServiceTravauxInterface {
-    public String lancer(String url) throws RemoteException {
+    public void lancer(String url) throws RemoteException {
         String proxyHost = "www-cache.iutnc.univ-lorraine.fr"; // Faut pas oublier de changer le proxy
         int proxyPort = 3128;
 
@@ -34,6 +34,5 @@ public class ServiceTravaux implements ServiceTravauxInterface {
         } catch (IOException | InterruptedException e) {
             System.out.println("Erreur lors de la requête HTTP: \n" + e.getMessage());
         }
-        return proxyHost;
     }
 }

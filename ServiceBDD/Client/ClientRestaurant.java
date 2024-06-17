@@ -1,7 +1,6 @@
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.util.Scanner;
 
 public class ClientRestaurant {
@@ -48,7 +47,7 @@ public class ClientRestaurant {
                 case 2:
                     System.out.println("Veuillez entrer l'id du restaurant");
                     Scanner scanner_idRestau = new Scanner(System.in);
-                    int idRestau = scanner_idRestau.nextInt();
+                    String idRestau = scanner_idRestau.nextLine();
 
                     System.out.println("Veuillez entrer le nom");
                     Scanner scanner_nom = new Scanner(System.in);
@@ -60,11 +59,11 @@ public class ClientRestaurant {
 
                     System.out.println("Veuillez entrer le nombre de personnes");
                     Scanner scanner_nbPersonne = new Scanner(System.in);
-                    int nbPersonnes = scanner_nbPersonne.nextInt();
+                    String nbPersonnes = scanner_nbPersonne.nextLine();
 
                     System.out.println("Veuillez entrer le numéro de téléphone");
                     Scanner scanner_numTel = new Scanner(System.in);
-                    int numTel = scanner_numTel.nextInt();
+                    String numTel = scanner_numTel.nextLine();
 
                     serviceRestaurant.reserverTable(idRestau, nom, prenom, nbPersonnes, numTel);
                     break;

@@ -1,12 +1,11 @@
+import com.sun.net.httpserver.HttpExchange;
+
 import java.io.IOException;
 import java.io.OutputStream;
 
-import com.sun.net.httpserver.*;
+public class RestaurantCoordHTTPHandler extends HandlerHTTP {
 
-
-public class IncidentHTTPHandler extends HandlerHTTP {
-
-    public IncidentHTTPHandler(Serveur serveur) {
+    public RestaurantCoordHTTPHandler(Serveur serveur) {
         super(serveur);
     }
 
@@ -17,7 +16,7 @@ public class IncidentHTTPHandler extends HandlerHTTP {
         exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type");
         exchange.getResponseHeaders().set("Content-Type", "application/json");
 
-        this.serveur.lancer("https://carto.g-ny.org/data/cifs/cifs_waze_v2.json");
+        this.serveur.getCoordRestaurant();
 
         exchange.sendResponseHeaders(200, response.getBytes().length);
         OutputStream os = exchange.getResponseBody();
