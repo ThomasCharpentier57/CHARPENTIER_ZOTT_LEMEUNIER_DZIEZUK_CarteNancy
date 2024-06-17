@@ -70,7 +70,21 @@ public class GestionBDD implements ServiceBDD {
 
             transaction.executeUpdate();
 
-           //ICI A FINIR
+            //ICI A FINIR
+            //Pour ajouter une reservation il faut recuperer l'id max de la table reservation et ajouter 1
+            //Il faut aussi ajouter la date de la reservation (ajourd'hui)
+
+            PreparedStatement reserver_table = this.connection.prepareStatement(
+                "INSERT INTO reservation (idReservation, idRestaurant, numtab, nom, prenom, nbpers, numTelephone, dateReservation) VALUES (?, ?, ?, ?, ?, ?, to_date(?,'dd/mm/yyyy'))"
+            );
+
+            reserver_table.setInt(1, );
+            reserver_table.setInt(2, );
+            reserver_table.setInt(3, );
+            reserver_table.setInt(4, );
+            reserver_table.setInt(5, );
+            reserver_table.setInt(6, );
+            reserver_table.setInt(7, );
 
             this.connection.commit();
             this.connection.close();
