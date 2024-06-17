@@ -1,6 +1,8 @@
 import { getAllRestaurant } from "./restaurant.js";
 import { displayMeteo } from "./uiMeteo.js";
 import { getCirculationIncidents } from "./traffics.js";
+import { getCollegesLycees } from './collegesLycees.js';
+
 
 const map = L.map('map').setView([48.692054, 6.184417], 13);
 
@@ -13,12 +15,14 @@ const velibLayer = L.layerGroup().addTo(map);
 const travauxLayer = L.layerGroup().addTo(map);
 const restaurantLayer = L.layerGroup().addTo(map);
 const trafficLayer = L.layerGroup().addTo(map);
+const collegesLyceesLayer = L.layerGroup().addTo(map);
 
 const overlays = {
     "Vélos": velibLayer,
     "Travaux": travauxLayer,
     "Restaurants": restaurantLayer,
-    "Traffic": trafficLayer
+    "Traffic": trafficLayer,
+    "Collèges et Lycées": collegesLyceesLayer
 };
 
 L.control.layers(null, overlays).addTo(map);
@@ -99,6 +103,34 @@ function addTrafficToMap() {
     });
 }
 
+const redIcon = new L.Icon({
+    iconUrl: './dist/img/red_icon.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
+function addCollegesLyceesToMap() {
+    getCollegesLycees().then(collegesLycees => {
+        if (collegesLycees) {
+            collegesLycees.forEach(etablissement => {
+                const popupContent = `
+                    <b>${etablissement.appellation_officielle}</b><br>
+                    ${etablissement.adresse_uai}, ${etablissement.code_postal_uai} ${etablissement.localite_acheminement_uai}<br>
+                    <b>Type:</b> ${etablissement.nature_uai_libe}<br>
+                    <b>Secteur:</b> ${etablissement.secteur_public_prive_libe}<br>
+                    <b>Ouvert depuis:</b> ${etablissement.date_ouverture}
+                `;
+                L.marker([etablissement.latitude, etablissement.longitude], {icon: redIcon})
+                    .addTo(collegesLyceesLayer)
+                    .bindPopup(popupContent);
+            });
+        }
+    });
+}
+
 addRestaurantToMap();
 displayMeteo();
 addTrafficToMap();
+addCollegesLyceesToMap();
