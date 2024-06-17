@@ -1,9 +1,5 @@
 package proxy;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ProxySelector;
@@ -27,7 +23,7 @@ public class ServiceTravaux implements ServiceTravauxInterface {
                 .build();
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://carto.g-ny.org/data/cifs/cifs_waze_v2.json"))
+                .uri(URI.create(url)) //"https://carto.g-ny.org/data/cifs/cifs_waze_v2.json"
                 .timeout(Duration.ofMinutes(2))
                 .header("Accept", "application/json")
                 .GET()
@@ -36,7 +32,7 @@ public class ServiceTravaux implements ServiceTravauxInterface {
         try {
             client.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
+            System.out.println("Erreur lors de la requête HTTP: \n" + e.getMessage());
         }
         return proxyHost;
     }
