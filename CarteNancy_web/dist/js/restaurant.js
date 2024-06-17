@@ -9,7 +9,7 @@ class Restaurant {
 }
 
 
-export const getAllRestaurant = function () {
+export async const getAllRestaurant = function () {
     fetch("http://localhost").then(
         function (response) {
             return response.json();

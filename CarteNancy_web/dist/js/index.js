@@ -50,5 +50,19 @@ loadStations().then(stations => {
     addStationsToMap(stations);
 });
 
+function addRestaurantToMap(){
+    getAllRestaurant().then(restaurants => {
+        restaurants.forEach(restaurant => {
+            const popupContent = `
+                        <b>${restaurant.nomRestau}</b><br>
+                        ${restaurant.adresseRestau}<br>
+                    `;
+            L.marker([restaurant.latitudeRestau, restaurant.longitudeRestau])
+                .addTo(map)
+                .bindPopup(popupContent);
+        });
+    });
+}
+
 
 getAllRestaurant();
