@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dfb031aa-3e6c-45f1-a691-6cb6e4268605" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ServiceProxyHTTP/proxy/LancerService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ServiceProxyHTTP/proxy/ServiceTravaux.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ServiceProxyHTTP/proxy/ServiceTravauxInterface.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ServiceProxyHTTP/proxy/json-20131018.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
-    </list>
+    <list default="true" id="dfb031aa-3e6c-45f1-a691-6cb6e4268605" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,7 +34,8 @@
   "keyToString": {
     "DefaultHtmlFileTemplate": "HTML File",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Merging main",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/blazy/CHARPENTIER_ZOTT_LEMEUNIER_DZIEZUK_CarteNancy",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
