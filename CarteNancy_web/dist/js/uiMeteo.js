@@ -11,11 +11,16 @@ function uiMeteo(listeMeteo) {
     node.setAttribute("id", "meteo");
 
     const toStringMap = element => `
-        <div id="${element.date}">
-            <p id="elemJour">${element.jour}</p>
-            <p id="elemHeure">${element.heure}</p>
-            <img src="${element.icon}"/>
-            <div id="temperature">${element.temperature}</div>
+        <div class="meteo-bubble">
+            <img class="meteo-icon" src="${element.icon}" alt="weather icon"/>
+            <div class="meteo-info">
+                <p class="meteo-date">${element.jour}</p>
+                <p class="meteo-time">${element.heure}</p>
+                <p class="meteo-temperature">Température: ${element.temperature}</p>
+                <p class="meteo-pluie">Pluie: ${element.pluie}</p>
+                <p class="meteo-vent">Vent: ${element.vent}</p>
+                <p class="meteo-nebulosite">Nébulosité: ${element.nebulosite}</p>
+            </div>
         </div>
     `;
     let tabString = listeMeteo.map(toStringMap);
