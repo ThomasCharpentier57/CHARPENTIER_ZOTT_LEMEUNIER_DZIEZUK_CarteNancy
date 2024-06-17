@@ -5,12 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dfb031aa-3e6c-45f1-a691-6cb6e4268605" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../ServiceBDD/GestionBDD.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServiceBDD/GestionBDD.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServiceBDD/LancerServiceBDD.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServiceBDD/LancerServiceBDD.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServiceBDD/ServiceBDD.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../ServiceBDD/ServiceBDD.java" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServiceProxyHTTP/proxy/LancerService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServiceProxyHTTP/proxy/ServiceTravaux.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServiceProxyHTTP/proxy/ServiceTravauxInterface.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../ServiceProxyHTTP/proxy/json-20131018.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,20 +37,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;rmi__bdd&quot;,
-    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Merging main",
+    "list.type.of.created.stylesheet": "CSS",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
