@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * GestionBDD
@@ -35,7 +37,7 @@ public class ServiceRestaurant implements ServiceRestaurantInterface {
         StringBuilder sb = new StringBuilder("{\n");
         try {
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM Restaurant;");
+            ResultSet rs = statement.executeQuery("SELECT * FROM restaurant");
             sb.append("\t\"restaurants\": [\n");
             while(rs.next()){
                 sb.append("\t{\n");
@@ -111,7 +113,7 @@ public class ServiceRestaurant implements ServiceRestaurantInterface {
 
     private int verif_table(String idRestau, String nbPlace) throws SQLException {
 
-        int[] list_table = {};
+        List<Integer> list_table = new ArrayList<>();
 
         PreparedStatement verif_table = this.connection.prepareStatement(
                 "SELECT numtab FROM tabl WHERE idRestaurant = ? AND nbplace >= ?"
@@ -122,15 +124,12 @@ public class ServiceRestaurant implements ServiceRestaurantInterface {
 
         ResultSet resultat_tabl_dispo = verif_table.executeQuery();
 
+        while (resultat_tabl_dispo.next()) {
+            list_table.add(resultat_tabl_dispo.getInt(1));
+            System.out.println(resultat_tabl_dispo.getInt(1));
+        }
+
         if (resultat_tabl_dispo.next() != false) {
-
-            int i = 0;
-
-            while (resultat_tabl_dispo.next()) {
-                list_table[i] = resultat_tabl_dispo.getInt(1);
-                System.out.println(resultat_tabl_dispo.getInt(1));
-                i++;
-            }
 
             PreparedStatement verif_restau = this.connection.prepareStatement(
                     "SELECT numtab FROM reservation WHERE numtab = ? AND dateReservation = to_date(?,'dd/mm/yyyy')"
