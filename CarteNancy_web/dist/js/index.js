@@ -1,5 +1,6 @@
 import { getAllRestaurant } from "./restaurant.js";
 import { displayMeteo } from "./uiMeteo.js";
+import { getCirculationIncidents } from "./traffics.js";
 
 const map = L.map('map').setView([48.692054, 6.184417], 13);
 
@@ -11,11 +12,13 @@ const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 const velibLayer = L.layerGroup().addTo(map);
 const travauxLayer = L.layerGroup().addTo(map);
 const restaurantLayer = L.layerGroup().addTo(map);
+const trafficLayer = L.layerGroup().addTo(map);
 
 const overlays = {
     "Vélos": velibLayer,
     "Travaux": travauxLayer,
-    "Restaurants": restaurantLayer
+    "Restaurants": restaurantLayer,
+    "Traffic": trafficLayer
 };
 
 L.control.layers(null, overlays).addTo(map);
@@ -77,5 +80,25 @@ function addRestaurantToMap() {
     });
 }
 
+function addTrafficToMap() {
+    getCirculationIncidents().then(incidents => {
+        incidents.forEach(incident => {
+            const popupContent = `
+                <b>${incident.short_description}</b><br>
+                ${incident.description}<br>
+                <b>Lieu:</b> ${incident.location}<br>
+                <b>Code postal:</b> ${incident.postcode}<br>
+                <b>Ville:</b> ${incident.city}<br>
+                <b>Début:</b> ${incident.start}<br>
+                <b>Fin:</b> ${incident.end}
+            `;
+            L.marker([incident.lat, incident.lon])
+                .addTo(trafficLayer)
+                .bindPopup(popupContent);
+        });
+    });
+}
+
 addRestaurantToMap();
 displayMeteo();
+addTrafficToMap();
