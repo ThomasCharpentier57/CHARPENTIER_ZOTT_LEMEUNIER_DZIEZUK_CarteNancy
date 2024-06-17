@@ -8,24 +8,16 @@ class Restaurant {
     }
 }
 
-
-export async const getAllRestaurant = function () {
-    fetch("http://localhost").then(
-        function (response) {
-            return response.json();
-        }
-    ).then(
-        function (data) {
-            let restaurants = [];
-            for (let i = 0; i < data.length; i++) {
-                let restaurant = new Restaurant(data[i].idRestau, data[i].nomRestau, data[i].adresseRestau, data[i].latitudeRestau, data[i].longitudeRestau);
-                restaurants.push(restaurant);
-            }
-            return restaurants;
-        }
-    ).catch(
-        function (error) {
-            console.log(error);
-        }
-    )
+export const getAllRestaurant = async function () {
+    try {
+        const response = await fetch("http://localhost");
+        const data = await response.json();
+        let restaurants = data.map(restaurant => new Restaurant(
+            restaurant.idRestau, restaurant.nomRestau, restaurant.adresseRestau,
+            restaurant.latitudeRestau, restaurant.longitudeRestau
+        ));
+        return restaurants;
+    } catch (error) {
+        console.log(error);
+    }
 }

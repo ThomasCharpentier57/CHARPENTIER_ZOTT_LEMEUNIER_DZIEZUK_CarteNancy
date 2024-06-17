@@ -5,14 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="99f482e0-5b25-4ea9-85d8-742d81a57494" name="Changes" comment="api velib quasi finie">
-      <change beforePath="$PROJECT_DIR$/.idea/CHARPENTIER_ZOTT_LEMEUNIER_DZIEZUK_CarteNancy.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CHARPENTIER_ZOTT_LEMEUNIER_DZIEZUK_CarteNancy.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServiceBDD/Client/ClientRestaurant.java" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceBDD/Client/ClientRestaurant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServiceBDD/Service/LancerServiceRestaurant.class" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceBDD/Service/LancerServiceRestaurant.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServiceBDD/Service/LancerServiceRestaurant.java" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceBDD/Service/LancerServiceRestaurant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServiceBDD/Service/ServiceRestaurant.java" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceBDD/Service/ServiceRestaurant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ServiceBDD/Service/ServiceRestaurantInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceBDD/Service/ServiceRestaurantInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ServiceBDD/ServiceBDD.iml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,32 +44,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Unnamed.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/blazy/CHARPENTIER_ZOTT_LEMEUNIER_DZIEZUK_CarteNancy/ServiceBDD",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15332031",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "show.migrate.to.gradle.popup": "false",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/blazy/CHARPENTIER_ZOTT_LEMEUNIER_DZIEZUK_CarteNancy/ServiceBDD&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15332031&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\blazy\CHARPENTIER_ZOTT_LEMEUNIER_DZIEZUK_CarteNancy\ServiceBDD\Client" />
@@ -97,9 +92,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-17.0.9-jbr-17.0.9-f644763e9732-e10f1064" />
-        <option value="jdk-18.0.2-corretto-18.0.2-3183f394aec4-38982a12" />
-        <option value="jdk-21.0.1-openjdk-21.0.1-f644763e9732-f98dd351" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.17890.1" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.17890.1" />
       </set>
     </attachedChunks>
   </component>
@@ -125,6 +119,9 @@
       <workItem from="1718633584287" duration="341000" />
       <workItem from="1718634010133" duration="18000" />
       <workItem from="1718634035484" duration="241000" />
+      <workItem from="1718636342457" duration="108000" />
+      <workItem from="1718636460440" duration="4000" />
+      <workItem from="1718636481891" duration="52000" />
     </task>
     <task id="LOCAL-00001" summary="api velib quasi finie">
       <option name="closed" value="true" />
