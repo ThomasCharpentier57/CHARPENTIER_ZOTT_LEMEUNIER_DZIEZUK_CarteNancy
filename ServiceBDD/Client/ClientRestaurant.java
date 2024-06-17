@@ -69,7 +69,7 @@ public class ClientRestaurant {
                     Scanner scanner_numTel = new Scanner(System.in);
                     int numTel = scanner_numTel.nextInt();
 
-                    serviceRestaurant.reserverTable(idRestau, nom, prenom, nbPersonnes, numTel);
+                    serviceRestaurant.reserverTable(String.valueOf(idRestau), nom, prenom, String.valueOf(nbPersonnes), String.valueOf(numTel));
                     break;
                 default:
                     break;
