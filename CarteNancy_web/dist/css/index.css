@@ -17,8 +17,8 @@ body, html {
     z-index: 1000;
     display: flex;
     align-items: center;
-    height: 80px; /* Increased height */
-    justify-content: space-between; /* Add this line */
+    height: 80px; 
+    justify-content: space-between; 
 }
 
 .navbar-buttons {
@@ -30,21 +30,21 @@ body, html {
     background-color: #555;
     color: #fff;
     border: none;
-    padding: 0.75rem 1.5rem; /* Increased padding */
+    padding: 0.75rem 1.5rem; 
     font-size: 1rem;
     cursor: pointer;
     border-radius: 4px;
-    transition: background-color 0.3s, transform 0.3s; /* Added transform transition */
+    transition: background-color 0.3s, transform 0.3s; 
 }
 
 .navbar-buttons button:hover {
     background-color: #777;
-    transform: scale(1.05); /* Slightly increase size on hover */
+    transform: scale(1.05); 
 }
 
 .navbar h1 {
     margin: 0;
-    font-size: 2rem; /* Increased font size */
+    font-size: 2rem; 
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
@@ -57,7 +57,7 @@ body, html {
     width: 100%;
     height: 100%;
     position: relative;
-    top: 80px; /* Adjusted for new navbar height */
+    top: 80px; 
 }
 
 #map {

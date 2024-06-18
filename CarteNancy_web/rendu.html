@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SAE</title>
+    <link rel="stylesheet" href="dist/css/rendu.css">
+    
+</head>
+<body>
+    <div class="navbar">
+        <h1>SAE Navigation</h1>
+        <div class="navbar-buttons">
+            <button onclick="location.href='index.html'">Accueil</button>
+            <button onclick="location.href='rendu.html'">Rendu</button>
+        </div>
+    </div>
+    
+    <div id="content">
+        <div class="report">
+            <h2>Compte Rendu</h2>
+            <p>Dans cette SAE, on retrouve 2 services RMI, un client RMI et un navigateur web.</p>
+            <p>Un premier service RMI possède une méthode permettant de créer un Client HTTP afin qu’il puisse récupérer des données qui sont bloquées et non accessibles par le navigateur. Ce client HTTP permet donc d’accéder aux données et de les récupérer au format JSON. Le principe de la méthode permet de retourner ce format JSON au client RMI. Ces données sont les incidents de la circulation de Nancy.</p>
+            <p>Le second service RMI possède des méthodes permettant de se connecter à un SGBD pour accéder à des données. Les méthodes sont notamment faites pour récupérer la liste des restaurants de la ville de Nancy, ainsi que de pouvoir faire en sorte d’y réserver une table.</p>
+            <p>Le client RMI permet de récupérer les 2 services RMI précédents à travers les annuaires RMI correspondant. Ensuite le client RMI crée un service HTTP permettant de mettre à disposition les données au format JSON sous forme d’API.</p>
+            <p>Le navigateur web récupère les données stockées dans des API extérieures et dans l’API mise en place par le client RMI afin de les afficher sur une carte.</p>
+            <div class="image-container">
+                <img src="dist/img/rendu.png" alt="Schéma explicatif">
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

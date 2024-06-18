@@ -18,7 +18,6 @@ function uiMeteo(listeMeteo) {
                 <p class="meteo-time">${element.heure}</p>
                 <p class="meteo-temperature">Température: ${element.temperature}</p>
                 <p class="meteo-pluie">Pluie: ${element.pluie}</p>
-                <p class="meteo-vent">Vent: ${element.vent}</p>
                 <p class="meteo-nebulosite">Nébulosité: ${element.nebulosite}</p>
             </div>
         </div>
