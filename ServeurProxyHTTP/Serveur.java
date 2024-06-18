@@ -41,13 +41,12 @@ public class Serveur {
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
-        return url;
     }
 
     public static void main(String[] args) {
-        HttpsServer server;
+        HttpServer server;
         try {
-            server = HttpsServer.create(new InetSocketAddress(8000), 0);
+            server = HttpServer.create(new InetSocketAddress(8000), 0);
 
             Serveur serveur = new Serveur("localhost", 2000, "localhost", 1099);
             server.createContext("/applications/incident", new IncidentHTTPHandler(serveur));
