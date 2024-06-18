@@ -29,9 +29,7 @@ public class ServiceTravaux implements ServiceTravauxInterface {
 
         try {
             HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            int code = response.statusCode();
-            String status = (code == 200) ? "OK" : "ERROR";
-            return "{ \"status\": \"" + status + "\", \"code\": " + code + ", \"response\": " + response.body() + " }";
+            return response.body() + "";
         } catch (IOException | InterruptedException e) {
             System.out.println("Erreur lors de la requête HTTP: \n" + e.getMessage());
             return "{ status: \"ERROR\", code: 500, response: \"Erreur lors de la requête HTTP : " + e.getMessage()

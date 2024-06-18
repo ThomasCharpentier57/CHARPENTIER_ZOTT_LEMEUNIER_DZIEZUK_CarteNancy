@@ -10,6 +10,9 @@ import java.time.format.DateTimeFormatter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 
 /**
  * GestionBDD
@@ -34,30 +37,25 @@ public class ServiceRestaurant implements ServiceRestaurantInterface {
 
     @Override
     public String getCoordRestaurant() throws RemoteException {
-        StringBuilder sb = new StringBuilder("{\n");
+        JSONArray json = new JSONArray();
         try {
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery("SELECT * FROM restaurant");
-            sb.append("\t\"restaurants\": [\n");
             while (rs.next()) {
-                sb.append("\t{\n");
-                sb.append("\t\t\"name\": " + rs.getString(1) + ",\n");
-                sb.append("\t\t\"adress\": " + rs.getString(2) + ",\n");
-                sb.append("\t\t\"longitude\": " + rs.getString(3) + ",\n");
-                sb.append("\t\t\"latitude\": " + rs.getString(4) + ",\n");
-                sb.append("\t},\n");
+                JSONObject restaurant = new JSONObject();
+                restaurant.put("name", rs.getString(2));
+                restaurant.put("adress", rs.getString(3));
+                restaurant.put("longitude", rs.getString(4));
+                restaurant.put("latitude", rs.getString(5));
+                json.put(restaurant);
             }
-            sb.append("\t]\n");
             rs.close();
             statement.close();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        sb.append("}");
-        return sb.toString();
-
-
+        return json.toString();
     }
 
     @Override
