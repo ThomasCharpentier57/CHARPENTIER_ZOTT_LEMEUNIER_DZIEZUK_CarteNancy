@@ -19,7 +19,7 @@ public class ServiceRestaurant implements ServiceRestaurantInterface {
 
     public ServiceRestaurant(String user, String password) {
         try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
+            Class.forName("oracle.jdbc.driver.OracleDriver");            
             System.out.println("Driver loaded");
             connection = DriverManager.getConnection("jdbc:oracle:thin:@charlemagne.iutnc.univ-lorraine.fr:1521:INFODB", user, password);
             connection.setAutoCommit(false);

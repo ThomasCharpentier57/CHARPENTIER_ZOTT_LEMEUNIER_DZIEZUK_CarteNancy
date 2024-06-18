@@ -3,10 +3,7 @@ import java.net.InetSocketAddress;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
-
-import Service.ServiceRestaurantInterface;
 import com.sun.net.httpserver.*;
-import proxy.ServiceTravauxInterface;
 
 public class Serveur {
 
@@ -16,7 +13,7 @@ public class Serveur {
     public Serveur(String adresseRestaurant, int portRestaurant, String adresseProxy, int portProxy) {
         try {
             this.sr = (ServiceRestaurantInterface) LocateRegistry.getRegistry(adresseRestaurant, portRestaurant).lookup("ServiceRestaurant");
-            this.spb = (ServiceTravauxInterface) LocateRegistry.getRegistry(adresseProxy, portProxy).lookup("ServiceProxyBlocage");
+            this.spb = (ServiceTravauxInterface) LocateRegistry.getRegistry(adresseProxy, portProxy).lookup("ServiceTravaux");
         } catch (RemoteException | NotBoundException e) {
             throw new RuntimeException(e);
         }
@@ -51,10 +48,10 @@ public class Serveur {
         try {
             server = HttpsServer.create(new InetSocketAddress(8000), 0);
 
-            Serveur serveur = new Serveur("localhost", 10002, "localhost", 10001);
-            server.createContext("/applications", new IncidentHTTPHandler(serveur));
-            server.createContext("/applications", new RestaurantHTTPHandler(serveur));
-            server.createContext("/applications", new RestaurantCoordHTTPHandler(serveur));
+            Serveur serveur = new Serveur("localhost", 2000, "localhost", 1099);
+            server.createContext("/applications/incident", new IncidentHTTPHandler(serveur));
+            server.createContext("/applications/restaurant", new RestaurantHTTPHandler(serveur));
+            server.createContext("/applications/restaurantCoor", new RestaurantCoordHTTPHandler(serveur));
             server.setExecutor(null);
             server.start();
         } catch (IOException e) {
