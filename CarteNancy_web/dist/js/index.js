@@ -3,7 +3,6 @@ import { displayMeteo } from "./uiMeteo.js";
 import { getCirculationIncidents } from "./traffics.js";
 import { getCollegesLycees } from './collegesLycees.js';
 
-
 const map = L.map('map').setView([48.692054, 6.184417], 13);
 
 const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -70,7 +69,6 @@ loadStations().then(stations => {
     addStationsToMap(stations);
 });
 
-
 const greenIcon = new L.Icon({
     iconUrl: './dist/img/ping_green.png',
     iconSize: [25, 41],
@@ -78,6 +76,7 @@ const greenIcon = new L.Icon({
     popupAnchor: [1, -34],
     shadowSize: [41, 41]
 });
+
 function addRestaurantToMap() {
     getAllRestaurant().then(restaurants => {
         restaurants.forEach(restaurant => {
@@ -85,7 +84,7 @@ function addRestaurantToMap() {
                 <b>${restaurant.nomRestau}</b><br>
                 ${restaurant.adresseRestau}<br>
             `;
-            L.marker([restaurant.latitudeRestau, restaurant.longitudeRestau],{icon: greenIcon})
+            L.marker([restaurant.latitudeRestau, restaurant.longitudeRestau], {icon: greenIcon})
                 .addTo(restaurantLayer)
                 .bindPopup(popupContent);
         });
@@ -112,16 +111,12 @@ function addTrafficToMap() {
                 <b>Début:</b> ${incident.start}<br>
                 <b>Fin:</b> ${incident.end}
             `;
-            L.marker([incident.lat, incident.lon],{icon: orangeIcon})
+            L.marker([incident.lat, incident.lon], {icon: orangeIcon})
                 .addTo(trafficLayer)
                 .bindPopup(popupContent);
         });
     });
 }
-
-
-
-
 
 const redIcon = new L.Icon({
     iconUrl: './dist/img/ping_red.png',
@@ -154,3 +149,50 @@ addRestaurantToMap();
 displayMeteo();
 addTrafficToMap();
 addCollegesLyceesToMap();
+
+map.on('click', function(e) {
+    const { lat, lng } = e.latlng;
+    const popupContent = `
+        <div class="popup-form">
+            <h3>Add Restaurant</h3>
+            <form id="restaurantForm">
+                <label for="nomRestau">Name:</label>
+                <input type="text" id="nomRestau" name="nomRestau" required><br>
+                <label for="adresseRestau">Address:</label>
+                <input type="text" id="adresseRestau" name="adresseRestau" required><br>
+                <button type="submit">Add Restaurant</button>
+            </form>
+        </div>
+    `;
+
+    const popup = L.popup()
+        .setLatLng([lat, lng])
+        .setContent(popupContent)
+        .openOn(map);
+
+    document.getElementById('restaurantForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const nomRestau = event.target.nomRestau.value;
+        const adresseRestau = event.target.adresseRestau.value;
+
+        addRestaurant({
+            nomRestau,
+            adresseRestau,
+            latitudeRestau: lat,
+            longitudeRestau: lng
+        });
+
+        map.closePopup();
+    });
+});
+
+function addRestaurant(restaurant) {
+    const popupContent = `
+        <b>${restaurant.nomRestau}</b><br>
+        ${restaurant.adresseRestau}<br>
+    `;
+    L.marker([restaurant.latitudeRestau, restaurant.longitudeRestau], {icon: greenIcon})
+        .addTo(restaurantLayer)
+        .bindPopup(popupContent);
+}
