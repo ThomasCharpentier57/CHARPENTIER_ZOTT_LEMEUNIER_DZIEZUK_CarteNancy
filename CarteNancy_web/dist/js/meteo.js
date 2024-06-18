@@ -54,13 +54,13 @@ async function getListTemp(data) {
 function getIcon(data) {
     data.forEach(elem => {
         if (elem.pluie > 1) {
-            elem.icon = "./dist/img/rain.png";
+            elem.icon = "./dist/img/pluie.png";
         } else if (elem.vent["10m"] > 10) {
-            elem.icon = "./dist/img/wind.png";
+            elem.icon = "./dist/img/vent.png";
         } else if (elem.nebulosite < 50) {
-            elem.icon = "./dist/img/sun.png";
+            elem.icon = "./dist/img/soleil.png";
         } else {
-            elem.icon = "./dist/img/cloud.png";
+            elem.icon = "./dist/img/nuage.png";
         }
     })
 }
