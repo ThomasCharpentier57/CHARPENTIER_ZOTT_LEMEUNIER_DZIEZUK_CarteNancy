@@ -35,12 +35,13 @@ public class Serveur {
         }
     }
 
-    public void lancer(String url) {
+    public String lancer(String url) {
         try {
-            spb.lancer(url);
+            return spb.lancer(url);
         } catch (RemoteException e) {
             throw new RuntimeException(e);
         }
+        return url;
     }
 
     public static void main(String[] args) {

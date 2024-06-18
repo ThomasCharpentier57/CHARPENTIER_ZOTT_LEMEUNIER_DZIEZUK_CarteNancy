@@ -9,7 +9,7 @@ import java.rmi.RemoteException;
 import java.time.Duration;
 
 public class ServiceTravaux implements ServiceTravauxInterface {
-    public void lancer(String url) throws RemoteException {
+    public String lancer(String url) throws RemoteException {
         String proxyHost = "www-cache.iutnc.univ-lorraine.fr"; // Faut pas oublier de changer le proxy
         int proxyPort = 3128;
 
@@ -28,9 +28,14 @@ public class ServiceTravaux implements ServiceTravauxInterface {
                 .build();
 
         try {
-            client.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            int code = response.statusCode();
+            String status = (code == 200) ? "OK" : "ERROR";
+            return "{ \"status\": \"" + status + "\", \"code\": " + code + ", \"response\": " + response.body() + " }";
         } catch (IOException | InterruptedException e) {
             System.out.println("Erreur lors de la requête HTTP: \n" + e.getMessage());
+            return "{ status: \"ERROR\", code: 500, response: \"Erreur lors de la requête HTTP : " + e.getMessage()
+                    + "\" }";
         }
     }
 }
