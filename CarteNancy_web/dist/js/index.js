@@ -2,6 +2,7 @@ import { getAllRestaurant } from "./restaurant.js";
 import { displayMeteo } from "./uiMeteo.js";
 import { getCirculationIncidents } from "./traffics.js";
 import { getCollegesLycees } from './collegesLycees.js';
+import { UIReservation } from './uiReservation.js';
 
 const map = L.map('map').setView([48.692054, 6.184417], 13);
 
@@ -77,6 +78,8 @@ const greenIcon = new L.Icon({
     shadowSize: [41, 41]
 });
 
+const uiReservation = new UIReservation();
+
 function addRestaurantToMap() {
     getAllRestaurant().then(restaurants => {
         restaurants.forEach(restaurant => {
@@ -84,9 +87,13 @@ function addRestaurantToMap() {
                 <b>${restaurant.nomRestau}</b><br>
                 ${restaurant.adresseRestau}<br>
             `;
-            L.marker([restaurant.latitudeRestau, restaurant.longitudeRestau], {icon: greenIcon})
+            const marker = L.marker([restaurant.latitudeRestau, restaurant.longitudeRestau], {icon: greenIcon})
                 .addTo(restaurantLayer)
                 .bindPopup(popupContent);
+
+            marker.on('click', () => {
+                uiReservation.showReservationForm(restaurant, marker);
+            });
         });
     });
 }

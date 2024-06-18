@@ -10,6 +10,7 @@ class LancerServeurHTTP {
             HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
             server.createContext("/applications/incident", new HandlerHTTPIncident());
             server.createContext("/applications/restaurantCoor", new HandlerHTTPRestaurantCoor());
+            server.createContext("/applications/restaurantRes", new HandlerHTTPRestaurantReserver());
             server.setExecutor(null);
             server.start();
         } catch (IOException e) {

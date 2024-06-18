@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/CHARPENTIER_ZOTT_LEMEUNIER_DZIEZUK_CarteNancy.iml" filepath="$PROJECT_DIR$/CHARPENTIER_ZOTT_LEMEUNIER_DZIEZUK_CarteNancy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ServiceBDD/ServiceBDD.iml" filepath="$PROJECT_DIR$/ServiceBDD/ServiceBDD.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ServiceProxyHTTP/ServiceProxyHTTP.iml" filepath="$PROJECT_DIR$/ServiceProxyHTTP/ServiceProxyHTTP.iml" />
+    </modules>
+  </component>
+</project>

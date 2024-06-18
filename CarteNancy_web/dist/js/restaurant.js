@@ -6,6 +6,29 @@ class Restaurant {
         this.latitudeRestau = latR;
         this.longitudeRestau = longR;
     }
+
+    reserver(nom, prenom, nbConvives, telephone) {
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://localhost:8000/applications/restaurantRes", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(JSON.stringify({
+            id: this.idRestau,
+            nom: nom,
+            prenom: prenom,
+            nbConvives: nbConvives,
+            telephone: telephone
+        }));
+        xhr.onreadystatechange = () => {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                const response = JSON.parse(xhr.responseText);
+                const formulaire = document.getElementsByClassName("formReservation")[0];
+                formulaire.innerHTML = `<p>${response.message}</p>`;
+                setTimeout(() => {
+                    formulaire.remove();
+                }, 3000);
+            }
+        };
+    }
 }
 
 export const getAllRestaurant = async function () {
@@ -21,3 +44,5 @@ export const getAllRestaurant = async function () {
         console.log(error);
     }
 }
+
+export { Restaurant };
