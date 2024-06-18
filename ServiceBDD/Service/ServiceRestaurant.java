@@ -58,6 +58,36 @@ public class ServiceRestaurant implements ServiceRestaurantInterface {
         return json.toString();
     }
 
+    public void ajouterRestaurant(String nom, String adresse, String longitude, String latitude) throws RemoteException {
+        try {
+            PreparedStatement ajouterRestaurant = connection.prepareStatement(
+                    "INSERT INTO restaurant (idRestaurant, nomRestaurant, adrRestaurant, latRestaurant, lontRestaurant) VALUES (?, ?, ?, ?, ?)"
+            );
+
+            PreparedStatement idMax = connection.prepareStatement(
+                    "SELECT MAX(idrestaurant) FROM restaurant"
+            );
+
+            ResultSet resultat_idMax = idMax.executeQuery();
+            resultat_idMax.next();
+            int idRestaurant = resultat_idMax.getInt(1) + 1;
+
+            ajouterRestaurant.setInt(1, idRestaurant);
+            ajouterRestaurant.setString(2, nom);
+            ajouterRestaurant.setString(3, adresse);
+            ajouterRestaurant.setDouble(4, Double.parseDouble(longitude));
+            ajouterRestaurant.setDouble(5, Double.parseDouble(latitude));
+
+            ajouterRestaurant.executeUpdate();
+
+            connection.commit();
+            System.out.println("Restaurant ajouté");
+
+        } catch (SQLException e) {
+            System.out.println("Erreur lors de l'ajout du restaurant : " + e.getMessage());
+        }
+    }
+
     @Override
     public void reserverTable(String idRestau, String nom, String prenom, String nbPersonnes, String nTelephone) throws RemoteException {
         try {

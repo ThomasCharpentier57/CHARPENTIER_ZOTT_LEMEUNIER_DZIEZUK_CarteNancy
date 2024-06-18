@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class ClientRestaurant {
 
     final static String service = "ServiceRestaurant";
-    static int port = 1099;
+    static int port = 2000;
     static String host = "localhost";
 
     public static void main(String[] args) throws RemoteException, NotBoundException {
@@ -32,7 +32,7 @@ public class ClientRestaurant {
         int choice;
         while (true) {
 
-            System.out.println("Quelle fonction voulez-vous utiliser (1-> Coordonnées d'un restaurant, 2-> Réserver table) : ");
+            System.out.println("Quelle fonction voulez-vous utiliser (1-> Coordonnées d'un restaurant, 2-> Réserver table, 3 -> ajouter) : ");
             choice = scanner.nextInt();
 
             switch (choice) {
@@ -67,6 +67,25 @@ public class ClientRestaurant {
 
                     serviceRestaurant.reserverTable(idRestau, nom, prenom, nbPersonnes, numTel);
                     break;
+                case 3:
+                    System.out.println("Veuillez entrer le nom du restaurant");
+                    Scanner scanner_nomRestau = new Scanner(System.in);
+                    String nomResteau = scanner_nomRestau.nextLine();
+
+                    System.out.println("Veuillez entrer l'adresse'");
+                    Scanner scanner_adr = new Scanner(System.in);
+                    String adr = scanner_adr.nextLine();
+
+                    System.out.println("Veuillez entrer lat");
+                    Scanner scanner_lat = new Scanner(System.in);
+                    String lat = scanner_lat.nextLine();
+
+                    System.out.println("Veuillez entrer long");
+                    Scanner scanner_long = new Scanner(System.in);
+                    String longi = scanner_long.nextLine();
+
+                    serviceRestaurant.ajouterRestaurant(nomResteau, adr, lat, longi);
+                break;
                 default:
                     break;
             }
