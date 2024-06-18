@@ -1,0 +1,271 @@
+Index: ../CarteNancy_web/dist/js/index.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import {getAllRestaurant} from \"./restaurant.js\";\r\n\r\nconst map = L.map('map').setView([48.692054, 6.184417], 13);\r\n\r\nconst tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {\r\n    maxZoom: 19,\r\n    attribution: '&copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a>'\r\n}).addTo(map);\r\n\r\nasync function loadStations() {\r\n    const [infoResponse, statusResponse] = await Promise.all([\r\n        fetch('https://transport.data.gouv.fr/gbfs/nancy/station_information.json'),\r\n        fetch('https://transport.data.gouv.fr/gbfs/nancy/station_status.json')\r\n    ]);\r\n\r\n    const [infoData, statusData] = await Promise.all([\r\n        infoResponse.json(),\r\n        statusResponse.json()\r\n    ]);\r\n\r\n    const stations = infoData.data.stations;\r\n    const statuses = statusData.data.stations;\r\n\r\n    const statusMap = new Map();\r\n    statuses.forEach(status => {\r\n        statusMap.set(status.station_id, status);\r\n    });\r\n\r\n    return stations.map(station => ({\r\n        ...station,\r\n        status: statusMap.get(station.station_id)\r\n    }));\r\n}\r\n\r\nfunction addStationsToMap(stations) {\r\n    stations.forEach(station => {\r\n        const popupContent = `\r\n                    <b>${station.name}</b><br>\r\n                    ${station.address}<br>\r\n                    <b>Vélos disponibles:</b> ${station.status.num_bikes_available}<br>\r\n                    <b>Places disponibles:</b> ${station.status.num_docks_available}\r\n                `;\r\n        L.marker([station.lat, station.lon])\r\n            .addTo(map)\r\n            .bindPopup(popupContent);\r\n    });\r\n}\r\n\r\nloadStations().then(stations => {\r\n    addStationsToMap(stations);\r\n});\r\n\r\nfunction addRestaurantToMap(){\r\n    getAllRestaurant().then(restaurants => {\r\n        restaurants.forEach(restaurant => {\r\n            const popupContent = `\r\n                        <b>${restaurant.nomRestau}</b><br>\r\n                        ${restaurant.adresseRestau}<br>\r\n                    `;\r\n            L.marker([restaurant.latitudeRestau, restaurant.longitudeRestau])\r\n                .addTo(map)\r\n                .bindPopup(popupContent);\r\n        });\r\n    });\r\n}\r\n\r\n\r\ngetAllRestaurant();
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../CarteNancy_web/dist/js/index.js b/../CarteNancy_web/dist/js/index.js
+--- a/../CarteNancy_web/dist/js/index.js	(revision 1a49509151e0c8d9d2e8fef9c8f91fa0d119c42d)
++++ b/../CarteNancy_web/dist/js/index.js	(date 1718635527355)
+@@ -1,4 +1,5 @@
+-import {getAllRestaurant} from "./restaurant.js";
++import { getAllRestaurant } from "./restaurant.js";
++import { displayMeteo } from "./uiMeteo.js";
+ 
+ const map = L.map('map').setView([48.692054, 6.184417], 13);
+ 
+@@ -7,6 +8,18 @@
+     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+ }).addTo(map);
+ 
++const velibLayer = L.layerGroup().addTo(map);
++const travauxLayer = L.layerGroup().addTo(map);
++const restaurantLayer = L.layerGroup().addTo(map);
++
++const overlays = {
++    "Vélos": velibLayer,
++    "Travaux": travauxLayer,
++    "Restaurants": restaurantLayer
++};
++
++L.control.layers(null, overlays).addTo(map);
++
+ async function loadStations() {
+     const [infoResponse, statusResponse] = await Promise.all([
+         fetch('https://transport.data.gouv.fr/gbfs/nancy/station_information.json'),
+@@ -35,13 +48,13 @@
+ function addStationsToMap(stations) {
+     stations.forEach(station => {
+         const popupContent = `
+-                    <b>${station.name}</b><br>
+-                    ${station.address}<br>
+-                    <b>Vélos disponibles:</b> ${station.status.num_bikes_available}<br>
+-                    <b>Places disponibles:</b> ${station.status.num_docks_available}
+-                `;
++            <b>${station.name}</b><br>
++            ${station.address}<br>
++            <b>Vélos disponibles:</b> ${station.status.num_bikes_available}<br>
++            <b>Places disponibles:</b> ${station.status.num_docks_available}
++        `;
+         L.marker([station.lat, station.lon])
+-            .addTo(map)
++            .addTo(velibLayer)
+             .bindPopup(popupContent);
+     });
+ }
+@@ -50,19 +63,19 @@
+     addStationsToMap(stations);
+ });
+ 
+-function addRestaurantToMap(){
++function addRestaurantToMap() {
+     getAllRestaurant().then(restaurants => {
+         restaurants.forEach(restaurant => {
+             const popupContent = `
+-                        <b>${restaurant.nomRestau}</b><br>
+-                        ${restaurant.adresseRestau}<br>
+-                    `;
++                <b>${restaurant.nomRestau}</b><br>
++                ${restaurant.adresseRestau}<br>
++            `;
+             L.marker([restaurant.latitudeRestau, restaurant.longitudeRestau])
+-                .addTo(map)
++                .addTo(restaurantLayer)
+                 .bindPopup(popupContent);
+         });
+     });
+ }
+ 
+-
+-getAllRestaurant();
+\ No newline at end of file
++addRestaurantToMap();
++displayMeteo();
+Index: ../.idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"99f482e0-5b25-4ea9-85d8-742d81a57494\" name=\"Changes\" comment=\"api velib quasi finie\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/CHARPENTIER_ZOTT_LEMEUNIER_DZIEZUK_CarteNancy.iml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/CHARPENTIER_ZOTT_LEMEUNIER_DZIEZUK_CarteNancy.iml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/misc.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/misc.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/ServiceBDD/Client/ClientRestaurant.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/ServiceBDD/Client/ClientRestaurant.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/ServiceBDD/Service/LancerServiceRestaurant.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/ServiceBDD/Service/LancerServiceRestaurant.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/ServiceBDD/Service/LancerServiceRestaurant.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/ServiceBDD/Service/LancerServiceRestaurant.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/ServiceBDD/Service/ServiceRestaurant.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/ServiceBDD/Service/ServiceRestaurant.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/ServiceBDD/Service/ServiceRestaurantInterface.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/ServiceBDD/Service/ServiceRestaurantInterface.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"ComposerSettings\">\r\n    <execution />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"JavaScript File\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\r\n      <map>\r\n        <entry key=\"$PROJECT_DIR$\" value=\"main\" />\r\n      </map>\r\n    </option>\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"PhpWorkspaceProjectConfiguration\" interpreter_name=\"C:\\xampp\\php\\php.exe\" />\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 0\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2hgoinTdZZBhWIqDTj4rTXRpwgO\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"Application.Unnamed.executor\": \"Run\",\r\n    \"Downloaded.Files.Path.Enabled\": \"false\",\r\n    \"Repository.Attach.Annotations\": \"false\",\r\n    \"Repository.Attach.JavaDocs\": \"false\",\r\n    \"Repository.Attach.Sources\": \"false\",\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"dart.analysis.tool.window.visible\": \"false\",\r\n    \"git-widget-placeholder\": \"main\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"last_opened_file_path\": \"C:/Users/blazy/CHARPENTIER_ZOTT_LEMEUNIER_DZIEZUK_CarteNancy/ServiceBDD\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"project.structure.last.edited\": \"Modules\",\r\n    \"project.structure.proportion\": \"0.15332031\",\r\n    \"project.structure.side.proportion\": \"0.2\",\r\n    \"settings.editor.selected.configurable\": \"preferences.lookFeel\",\r\n    \"show.migrate.to.gradle.popup\": \"false\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\blazy\\CHARPENTIER_ZOTT_LEMEUNIER_DZIEZUK_CarteNancy\\ServiceBDD\\Client\" />\r\n      <recent name=\"C:\\Users\\blazy\\CHARPENTIER_ZOTT_LEMEUNIER_DZIEZUK_CarteNancy\\ServeurProxyHTTP\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\blazy\\CHARPENTIER_ZOTT_LEMEUNIER_DZIEZUK_CarteNancy\\ServiceBDD\\Service\" />\r\n      <recent name=\"C:\\Users\\blazy\\CHARPENTIER_ZOTT_LEMEUNIER_DZIEZUK_CarteNancy\\ServiceBDD\\Client\" />\r\n      <recent name=\"C:\\Users\\blazy\\CHARPENTIER_ZOTT_LEMEUNIER_DZIEZUK_CarteNancy\\ServeurProxyHTTP\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"Unnamed\" type=\"Application\" factoryName=\"Application\" nameIsGenerated=\"true\">\r\n      <module name=\"CHARPENTIER_ZOTT_LEMEUNIER_DZIEZUK_CarteNancy\" />\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"jdk-17.0.9-jbr-17.0.9-f644763e9732-e10f1064\" />\r\n        <option value=\"jdk-18.0.2-corretto-18.0.2-3183f394aec4-38982a12\" />\r\n        <option value=\"jdk-21.0.1-openjdk-21.0.1-f644763e9732-f98dd351\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"99f482e0-5b25-4ea9-85d8-742d81a57494\" name=\"Changes\" comment=\"\" />\r\n      <created>1718025212033</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1718025212033</updated>\r\n      <workItem from=\"1718025213675\" duration=\"2146000\" />\r\n      <workItem from=\"1718029086687\" duration=\"48000\" />\r\n      <workItem from=\"1718029146994\" duration=\"3662000\" />\r\n      <workItem from=\"1718094265601\" duration=\"41000\" />\r\n      <workItem from=\"1718109206676\" duration=\"3522000\" />\r\n      <workItem from=\"1718115577787\" duration=\"46000\" />\r\n      <workItem from=\"1718626793410\" duration=\"59000\" />\r\n      <workItem from=\"1718630620316\" duration=\"113000\" />\r\n      <workItem from=\"1718630826975\" duration=\"1277000\" />\r\n      <workItem from=\"1718632133552\" duration=\"609000\" />\r\n      <workItem from=\"1718632765946\" duration=\"784000\" />\r\n      <workItem from=\"1718633584287\" duration=\"341000\" />\r\n      <workItem from=\"1718634010133\" duration=\"18000\" />\r\n      <workItem from=\"1718634035484\" duration=\"241000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"api velib quasi finie\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1718032648455</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1718032648455</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"api velib quasi finie\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1718033006346</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1718033006346</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"3\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"api velib quasi finie\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"api velib quasi finie\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/ServiceBDD/Service/ServiceRestaurant.java</url>\r\n          <line>52</line>\r\n          <option name=\"timeStamp\" value=\"1\" />\r\n        </line-breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../.idea/workspace.xml b/../.idea/workspace.xml
+--- a/../.idea/workspace.xml	(revision 1a49509151e0c8d9d2e8fef9c8f91fa0d119c42d)
++++ b/../.idea/workspace.xml	(date 1718635527354)
+@@ -4,6 +4,7 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
++<<<<<<< HEAD
+     <list default="true" id="99f482e0-5b25-4ea9-85d8-742d81a57494" name="Changes" comment="api velib quasi finie">
+       <change beforePath="$PROJECT_DIR$/.idea/CHARPENTIER_ZOTT_LEMEUNIER_DZIEZUK_CarteNancy.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CHARPENTIER_ZOTT_LEMEUNIER_DZIEZUK_CarteNancy.iml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+@@ -13,6 +14,12 @@
+       <change beforePath="$PROJECT_DIR$/ServiceBDD/Service/LancerServiceRestaurant.java" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceBDD/Service/LancerServiceRestaurant.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/ServiceBDD/Service/ServiceRestaurant.java" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceBDD/Service/ServiceRestaurant.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/ServiceBDD/Service/ServiceRestaurantInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/ServiceBDD/Service/ServiceRestaurantInterface.java" afterDir="false" />
++=======
++    <list default="true" id="99f482e0-5b25-4ea9-85d8-742d81a57494" name="Changes" comment="serveur changement">
++      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/CarteNancy_web/dist/js/restaurant.js" beforeDir="false" />
++      <change beforePath="$PROJECT_DIR$/ServiceBDD/Service/LancerServiceRestaurant.class" beforeDir="false" />
++>>>>>>> 281e21d9f10d2dd6afa260c0f4d3527eb08ec819
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -142,7 +149,15 @@
+       <option name="project" value="LOCAL" />
+       <updated>1718033006346</updated>
+     </task>
+-    <option name="localTasksCounter" value="3" />
++    <task id="LOCAL-00003" summary="serveur changement">
++      <option name="closed" value="true" />
++      <created>1718632841569</created>
++      <option name="number" value="00003" />
++      <option name="presentableId" value="LOCAL-00003" />
++      <option name="project" value="LOCAL" />
++      <updated>1718632841569</updated>
++    </task>
++    <option name="localTasksCounter" value="4" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">
+@@ -161,7 +176,8 @@
+   </component>
+   <component name="VcsManagerConfiguration">
+     <MESSAGE value="api velib quasi finie" />
+-    <option name="LAST_COMMIT_MESSAGE" value="api velib quasi finie" />
++    <MESSAGE value="serveur changement" />
++    <option name="LAST_COMMIT_MESSAGE" value="serveur changement" />
+   </component>
+   <component name="XDebuggerManager">
+     <breakpoint-manager>
+Index: ../CarteNancy_web/index.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html lang=\"en\">\r\n<head>\r\n    <meta charset=\"UTF-8\">\r\n    <title>SAE</title>\r\n    <link rel=\"stylesheet\" href=\"dist/css/index.css\">\r\n    <link rel=\"stylesheet\" href=\"https://unpkg.com/leaflet@1.9.4/dist/leaflet.css\"\r\n        integrity=\"sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=\"\r\n        crossorigin=\"\"/>\r\n    <script src=\"https://unpkg.com/leaflet@1.9.4/dist/leaflet.js\"\r\n        integrity=\"sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=\"\r\n        crossorigin=\"\"></script>\r\n</head>\r\n<body>\r\n    <div class=\"navbar\">\r\n        <h1>SAE Navigation</h1>\r\n    </div>\r\n    <div class=\"containerWeb\">\r\n        <div id=\"map\"></div>\r\n    </div>\r\n\r\n    <script type=\"module\" src='./dist/js/index.js'></script>\r\n</body>\r\n</html>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../CarteNancy_web/index.html b/../CarteNancy_web/index.html
+--- a/../CarteNancy_web/index.html	(revision 1a49509151e0c8d9d2e8fef9c8f91fa0d119c42d)
++++ b/../CarteNancy_web/index.html	(date 1718635527356)
+@@ -18,6 +18,7 @@
+     <div class="containerWeb">
+         <div id="map"></div>
+     </div>
++    <div id="content"></div>
+ 
+     <script type="module" src='./dist/js/index.js'></script>
+ </body>
+Index: ../CarteNancy_web/dist/js/meteo.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../CarteNancy_web/dist/js/meteo.js b/../CarteNancy_web/dist/js/meteo.js
+new file mode 100644
+--- /dev/null	(date 1718635527355)
++++ b/../CarteNancy_web/dist/js/meteo.js	(date 1718635527355)
+@@ -0,0 +1,66 @@
++let url = 'https://www.infoclimat.fr/public-api/gfs/json?_ll=48.67103,6.15083&_auth=ARsDFFIsBCZRfFtsD3lSe1Q8ADUPeVRzBHgFZgtuAH1UMQNgUTNcPlU5VClSfVZkUn8AYVxmVW0Eb1I2WylSLgFgA25SNwRuUT1bPw83UnlUeAB9DzFUcwR4BWMLYwBhVCkDb1EzXCBVOFQoUmNWZlJnAH9cfFVsBGRSPVs1UjEBZwNkUjIEYVE6WyYPIFJjVGUAZg9mVD4EbwVhCzMAMFQzA2JRMlw5VThUKFJiVmtSZQBpXGtVbwRlUjVbKVIuARsDFFIsBCZRfFtsD3lSe1QyAD4PZA%3D%3D&_c=19f3aa7d766b6ba91191c8be71dd1ab2';
++let dateCourante = {};
++
++export async function getDataTemp() {
++    const date = new Date();
++    dateCourante.year = date.getFullYear();
++    dateCourante.month = date.getMonth() + 1;
++    dateCourante.month = dateCourante.month < 10 ? '0' + dateCourante.month : dateCourante.month;
++    dateCourante.day = date.getDate();
++    dateCourante.day = dateCourante.day < 10 ? '0' + dateCourante.day : dateCourante.day;
++    dateCourante.hour = date.getHours();
++    dateCourante.hour = dateCourante.hour < 10 ? '0' + dateCourante.hour : dateCourante.hour;
++    dateCourante.minute = date.getMinutes();
++    dateCourante.minute = dateCourante.minute < 10 ? '0' + dateCourante.minute : dateCourante.minute;
++    dateCourante.second = date.getSeconds();
++    dateCourante.second = dateCourante.second < 10 ? '0' + dateCourante.second : dateCourante.second;
++    dateCourante.totalCurrentDate = dateCourante.year + '-' + dateCourante.month + '-' + dateCourante.day + ' ' +
++        dateCourante.hour + ':' + dateCourante.minute + ':' + dateCourante.second;
++
++    let data = await fetch(url);
++    let dataJson = await data.json();
++    let listmeteo = await getListTemp(dataJson);
++    await getIcon(listmeteo);
++    return listmeteo;
++}
++
++async function getListTemp(data) {
++    let currentDate = new Date(dateCourante.totalCurrentDate);
++    let listMeteo = [];
++
++    for (let elem in data) {
++        let elemDate = new Date(elem);
++        if (!isNaN(elemDate)) {
++            let comparaison = elemDate.getTime() < currentDate.getTime();
++            if (!comparaison) {
++                if (listMeteo.length < 8) {
++                    let objetElem = {};
++                    objetElem.date = elem;
++                    objetElem.jour = elem.split(" ")[0];
++                    objetElem.heure = elem.split(" ")[1];
++                    objetElem.heure = objetElem.heure.substring(0, objetElem.heure.length - 3);
++                    objetElem.temperature = Math.floor(data[elem].temperature["2m"] - 272.15) + "°C";
++                    objetElem.pluie = data[elem].pluie;
++                    objetElem.vent = data[elem].vent_moyen;
++                    objetElem.nebulosite = data[elem].nebulosite.totale;
++                    listMeteo.push(objetElem);
++                }
++            }
++        }
++    }
++    return listMeteo;
++}
++
++function getIcon(data) {
++    data.forEach(elem => {
++        if (elem.pluie > 1) {
++            elem.icon = 'assets/rain.png';
++        } else if (elem.vent["10m"] > 10) {
++            elem.icon = 'assets/wind.png';
++        } else if (elem.nebulosite < 50) {
++            elem.icon = 'assets/sun.png';
++        } else {
++            elem.icon = 'assets/cloud.png';
++        }
++    })
++}
+Index: ../CarteNancy_web/dist/js/uiMeteo.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../CarteNancy_web/dist/js/uiMeteo.js b/../CarteNancy_web/dist/js/uiMeteo.js
+new file mode 100644
+--- /dev/null	(date 1718635527355)
++++ b/../CarteNancy_web/dist/js/uiMeteo.js	(date 1718635527355)
+@@ -0,0 +1,25 @@
++import { getDataTemp } from "./meteo.js";
++
++export async function displayMeteo() {
++    let data = await getDataTemp();
++    uiMeteo(data);
++}
++
++function uiMeteo(listeMeteo) {
++    let node = document.createElement("div");
++    document.querySelector("#content").appendChild(node);
++    node.setAttribute("id", "meteo");
++
++    const toStringMap = element => `
++        <div id="${element.date}">
++            <p id="elemJour">${element.jour}</p>
++            <p id="elemHeure">${element.heure}</p>
++            <img src="${element.icon}"/>
++            <div id="temperature">${element.temperature}</div>
++        </div>
++    `;
++    let tabString = listeMeteo.map(toStringMap);
++    const concatReduce = (acc, element) => acc + element;
++    let result = tabString.reduce(concatReduce, "");
++    node.innerHTML = result;
++}
