@@ -70,6 +70,14 @@ loadStations().then(stations => {
     addStationsToMap(stations);
 });
 
+
+const greenIcon = new L.Icon({
+    iconUrl: './dist/img/ping_green.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
 function addRestaurantToMap() {
     getAllRestaurant().then(restaurants => {
         restaurants.forEach(restaurant => {
@@ -77,12 +85,20 @@ function addRestaurantToMap() {
                 <b>${restaurant.nomRestau}</b><br>
                 ${restaurant.adresseRestau}<br>
             `;
-            L.marker([restaurant.latitudeRestau, restaurant.longitudeRestau])
+            L.marker([restaurant.latitudeRestau, restaurant.longitudeRestau],{icon: greenIcon})
                 .addTo(restaurantLayer)
                 .bindPopup(popupContent);
         });
     });
 }
+
+const orangeIcon = new L.Icon({
+    iconUrl: './dist/img/ping_orange.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
 
 function addTrafficToMap() {
     getCirculationIncidents().then(incidents => {
@@ -96,15 +112,19 @@ function addTrafficToMap() {
                 <b>Début:</b> ${incident.start}<br>
                 <b>Fin:</b> ${incident.end}
             `;
-            L.marker([incident.lat, incident.lon])
+            L.marker([incident.lat, incident.lon],{icon: orangeIcon})
                 .addTo(trafficLayer)
                 .bindPopup(popupContent);
         });
     });
 }
 
+
+
+
+
 const redIcon = new L.Icon({
-    iconUrl: './dist/img/red_icon.png',
+    iconUrl: './dist/img/ping_red.png',
     iconSize: [25, 41],
     iconAnchor: [12, 41],
     popupAnchor: [1, -34],
