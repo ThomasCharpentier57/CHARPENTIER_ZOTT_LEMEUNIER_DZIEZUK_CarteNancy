@@ -2,7 +2,6 @@ import { getAllRestaurant } from "./restaurant.js";
 import { displayMeteo } from "./uiMeteo.js";
 import { getCirculationIncidents } from "./traffics.js";
 import { getCollegesLycees } from './collegesLycees.js';
-import { UIReservation } from './uiReservation.js';
 
 const map = L.map('map').setView([48.692054, 6.184417], 13);
 
@@ -12,14 +11,12 @@ const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 const velibLayer = L.layerGroup().addTo(map);
-const travauxLayer = L.layerGroup().addTo(map);
 const restaurantLayer = L.layerGroup().addTo(map);
 const trafficLayer = L.layerGroup().addTo(map);
 const collegesLyceesLayer = L.layerGroup().addTo(map);
 
 const overlays = {
     "Vélos": velibLayer,
-    "Travaux": travauxLayer,
     "Restaurants": restaurantLayer,
     "Traffic": trafficLayer,
     "Collèges et Lycées": collegesLyceesLayer
@@ -64,6 +61,7 @@ function addStationsToMap(stations) {
             .addTo(velibLayer)
             .bindPopup(popupContent);
     });
+
 }
 
 loadStations().then(stations => {
@@ -78,24 +76,22 @@ const greenIcon = new L.Icon({
     shadowSize: [41, 41]
 });
 
-const uiReservation = new UIReservation();
-
 function addRestaurantToMap() {
     getAllRestaurant().then(restaurants => {
         restaurants.forEach(restaurant => {
-            const popupContent = `
-                <b>${restaurant.nomRestau}</b><br>
-                ${restaurant.adresseRestau}<br>
+            document.getElementById("allRestau").innerHTML += `<option value="${restaurant.id}">${restaurant.name}</option>`;
+
+            let popupContent = `
+                <b>${restaurant.name}</b><br>
+                ${restaurant.adresse}<br>
             `;
-            const marker = L.marker([restaurant.latitudeRestau, restaurant.longitudeRestau], {icon: greenIcon})
+            L.marker([restaurant.lat, restaurant.lont], {icon: greenIcon})
                 .addTo(restaurantLayer)
                 .bindPopup(popupContent);
-
-            marker.on('click', () => {
-                uiReservation.showReservationForm(restaurant, marker);
-            });
         });
     });
+
+
 }
 
 const orangeIcon = new L.Icon({

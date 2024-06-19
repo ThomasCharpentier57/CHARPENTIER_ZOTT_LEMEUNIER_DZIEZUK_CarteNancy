@@ -22,8 +22,32 @@
     <div class="containerWeb">
         <div id="map"></div>
     </div>
+    <div>
+        <form id="reservationForm">
+            <h3>Réserver une table :</h3>
+            <select id="allRestau">
+            </select>
+            <div id="formulaireNom">
+                <label for="nom">Nom</label>
+                <input type="text" id="nom" required><br>
+            </div>
+            <div id="formulairePrenom">
+                <label for="prenom">Prénom</label>
+                <input type="text" id="prenom" required><br>
+            </div>
+            <div id="formulaireNbConv">
+                <label for="nbConvives">Nombre de convives</label>
+                <input type="number" id="nbConvives" required min="1"><br>
+            </div>
+            <div id="formulaireTelephone">
+                <label for="telephone">Téléphone</label>
+                <input type="tel" id="telephone" required><br>
+            </div>
+            <input type="submit" value="Réserver" onsubmit="submitForm()">
+        </form>
+    </div>
     <div id="content"></div>
-
     <script type="module" src='./dist/js/index.js'></script>
+    <script type="module" src='./dist/js/uiReservation.js'></script>
 </body>
 </html>

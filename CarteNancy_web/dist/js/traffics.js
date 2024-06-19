@@ -1,12 +1,15 @@
 export async function getCirculationIncidents() {
     try {
-        let response = await fetch('https://carto.g-ny.org/data/cifs/cifs_waze_v2.json');
+        let response = await fetch('http://localhost:8000/applications/incident');
         response = await response.json();
+
 
         let incidents = [];
 
         for (const incident of response.incidents) {
+
             let [lat, lon] = incident.location.polyline.split(' ');
+            
             let incidentLocation = await fetch(`https://api-adresse.data.gouv.fr/reverse?lon=${lon}&lat=${lat}&type=street&limit=1`)
                 .then(r => r.json())
                 .then(r => r.features[0].properties)
