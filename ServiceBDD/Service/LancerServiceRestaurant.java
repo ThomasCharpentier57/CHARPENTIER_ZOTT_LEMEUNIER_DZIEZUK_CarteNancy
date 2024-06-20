@@ -6,7 +6,7 @@ import java.rmi.server.UnicastRemoteObject;
 public class LancerServiceRestaurant {
     public static void main(String[] args) throws RemoteException {
         //Ajouter identifiant et MDP
-        ServiceRestaurant bdd = new ServiceRestaurant("", "");
+        ServiceRestaurant bdd = new ServiceRestaurant("zott1u", "Ju62lt82&*");
 
         try {
             ServiceRestaurantInterface service = (ServiceRestaurantInterface)UnicastRemoteObject.exportObject(bdd, 0);
