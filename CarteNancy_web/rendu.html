@@ -18,14 +18,65 @@
     <div id="content">
         <div class="report">
             <h2>Compte Rendu</h2>
-            <p>Dans cette SAE, on retrouve 2 services RMI, un client RMI et un navigateur web.</p>
-            <p>Un premier service RMI possède une méthode permettant de créer un Client HTTP afin qu’il puisse récupérer des données qui sont bloquées et non accessibles par le navigateur. Ce client HTTP permet donc d’accéder aux données et de les récupérer au format JSON. Le principe de la méthode permet de retourner ce format JSON au client RMI. Ces données sont les incidents de la circulation de Nancy.</p>
-            <p>Le second service RMI possède des méthodes permettant de se connecter à un SGBD pour accéder à des données. Les méthodes sont notamment faites pour récupérer la liste des restaurants de la ville de Nancy, ainsi que de pouvoir faire en sorte d’y réserver une table.</p>
-            <p>Le client RMI permet de récupérer les 2 services RMI précédents à travers les annuaires RMI correspondant. Ensuite le client RMI crée un service HTTP permettant de mettre à disposition les données au format JSON sous forme d’API.</p>
-            <p>Le navigateur web récupère les données stockées dans des API extérieures et dans l’API mise en place par le client RMI afin de les afficher sur une carte.</p>
+            <p>Notre application répartie utilise une architecture hybride, combinant des technologies front-end et back-end pour fournir une expérience utilisateur intégrée et enrichie.</p>
+
+            <h3>Front-end</h3>
+            <p>La partie front-end de notre application est développée en JavaScript et utilise la bibliothèque Leaflet pour afficher les données sur une carte interactive. Voici comment elle fonctionne :</p>
+
+            <h4>Visualisation des données sur la carte :</h4>
+            <ul>
+                <li>Les stations Vélib sont représentées par des marqueurs bleus. En cliquant sur ces marqueurs, les utilisateurs peuvent voir l'adresse de la station, le nombre de vélos disponibles et le nombre de places de parking libres.</li>
+                <li>Les incidents de circulation sont marqués en orange sur la carte. Les détails comme le type d'incident, la date, la localisation et la description sont accessibles via une popup.</li>
+                <li>Pour ce qui est des établissements d'enseignement supérieur, il n'y avait pas d'api adaptée, donc on a décidé d'afficher quand même les lycées et les collèges de Nancy, représentés par des marqueurs rouges.</li>
+            </ul>
+
+            <h4>Interaction avec les services back-end :</h4>
+            <ul>
+                <li>Un formulaire est disponible pour réserver une table dans un restaurant en dessous de la carte. Lorsqu'un utilisateur clique sur un marqueur de restaurant, il peut voir les détails du restaurant.</li>
+                <li>L'ajout d'un nouveau restaurant est également possible en cliquant sur la carte. Les détails du restaurant sont ensuite ajoutés à notre base de données.</li>
+            </ul>
+
+            <h3>Back-end</h3>
+            <p>La partie back-end de l'application est développée en Java et utilise les services RMI pour accéder aux données et effectuer des opérations sur la base de données. Voici ce qu'elle propose :</p>
+
+            <h4>Service RMI Restaurants :</h4>
+            <ul>
+                <li>Permet de récupérer la liste des restaurants de Nancy depuis notre base de données.</li>
+                <li>Permet d'ajouter de nouveaux restaurants à la base de données.</li>
+                <li>Permet de gérer les réservations dans les restaurants enregistrés.</li>
+            </ul>
+
+            <h4>Service RMI Proxy :</h4>
+            <ul>
+                <li>Contourne les problèmes de CORS en faisant des requêtes HTTP à des serveurs externes pour récupérer des données bloquées.</li>
+            </ul>
+
+            <h4>Proxy HTTPS :</h4>
+            <ul>
+                <li>Un serveur HTTPS est mis en place pour gérer nos propres API et les services RMI associés.</li>
+                <li>Gère la communication entre le front-end JavaScript et les services back-end Java via des requêtes HTTP sécurisées.</li>
+            </ul>
+
+            <h3>Schéma d'Architecture</h3>
             <div class="image-container">
                 <img src="dist/img/rendu.png" alt="Schéma explicatif">
             </div>
+
+            <h3>Déroulement de l'Application</h3>
+            <h4>Initialisation de l'interface utilisateur :</h4>
+            <p>Le chargement initial des données (stations Vélib, incidents de circulation, établissements d'enseignement supérieur) est effectué dès que l'utilisateur accède à la carte.</p>
+
+            <h4>Interaction Utilisateur :</h4>
+            <p>Les utilisateurs peuvent interagir avec la carte en cliquant sur les différents marqueurs pour obtenir des informations détaillées.</p>
+
+            <h4>Lancement du serveur :</h4>
+            <p>Il faut lancer le fichier <code>lancer.sh</code> afin de pouvoir lancer toutes les commandes nécessaires à l'affichage du reste des données.</p>
+
+            <h3>Liens Utiles</h3>
+            <ul>
+                <li><a href="https://github.com/ThomasCharpentier57/CHARPENTIER_ZOTT_LEMEUNIER_DZIEZUK_CarteNancy.git" target="_blank">Lien Github</a></li>
+                <li><a href="https://webetu.iutnc.univ-lorraine.fr/www/charpe134u/CarteNancy/index.html" target="_blank">Lien Webetu</a></li>
+            </ul>
         </div>
     </div>
 

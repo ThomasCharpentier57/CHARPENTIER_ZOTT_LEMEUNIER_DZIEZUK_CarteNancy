@@ -1,144 +1,3 @@
-<<<<<<< HEAD
-body, html {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    font-family: Arial, sans-serif;
-}
-
-.navbar {
-    background-color: #333;
-    color: #fff;
-    padding: 1rem 2rem;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    height: 80px; /* Increased height */
-    justify-content: space-between; /* Add this line */
-}
-
-.navbar-buttons {
-    display: flex;
-    gap: 1rem;
-}
-
-.navbar-buttons button {
-    background-color: #555;
-    color: #fff;
-    border: none;
-    padding: 0.75rem 1.5rem; /* Increased padding */
-    font-size: 1rem;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s, transform 0.3s; /* Added transform transition */
-}
-
-.navbar-buttons button:hover {
-    background-color: #777;
-    transform: scale(1.05); /* Slightly increase size on hover */
-}
-
-.navbar h1 {
-    margin: 0;
-    font-size: 2rem; /* Increased font size */
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
-.containerWeb {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    position: relative;
-    top: 80px; /* Adjusted for new navbar height */
-}
-
-#map {
-    width: 80%;
-    height: 80vh;
-    border: 2px solid #333;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    margin-bottom: 100px;
-    margin-top: 50px;
-
-}
-
-@media (max-width: 768px) {
-    .navbar h1 {
-        font-size: 1.5rem;
-    }
-
-    #map {
-        width: 90%;
-        height: 70vh;
-    }
-
-    .navbar-buttons {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
-    .navbar-buttons button {
-        font-size: 0.9rem;
-    }
-}
-#meteo {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-    padding: 1rem;
-}
-
-.meteo-bubble {
-    display: flex;
-    align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 1rem;
-    background-color: #f9f9f9;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 250px;
-    margin: 0.5rem;
-}
-
-.meteo-icon {
-    width: 70px;
-    height: 50px;
-    margin-right: 1rem;
-}
-
-.meteo-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.meteo-info p {
-    margin: 0;
-    font-size: 0.9rem;
-    color: #333;
-}
-
-.meteo-date {
-    font-weight: bold;
-}
-
-@media (max-width: 768px) {
-    .meteo-bubble {
-        width: 90%;
-    }
-}
-=======
 body, html {
     margin: 0;
     padding: 0;
@@ -320,4 +179,43 @@ body, html {
 .popup-form button:hover {
     background-color: #0056b3;
 }
->>>>>>> 569193ff9685069421d748b8680a6dbad51be3e1
+
+.reservation-form-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#reservationForm h3 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-submit {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.form-submit:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
