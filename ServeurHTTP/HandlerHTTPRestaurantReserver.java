@@ -22,7 +22,8 @@ public class HandlerHTTPRestaurantReserver implements HttpHandler{
             ServiceRestaurantInterface service = (ServiceRestaurantInterface)reg.lookup("ServiceRestaurant");
             byte[] allBytes = exchange.getRequestBody().readAllBytes();
             String content = new String(allBytes, StandardCharsets.UTF_8);
-            response = service.reserverTable(content.split(","));
+            String[] parts = content.split(",");
+            response = service.reserverTable(parts[0],parts[1],parts[2],parts[3], parts[4]);
         } catch (RemoteException e){
             e.printStackTrace();
         } catch (NotBoundException e1){
